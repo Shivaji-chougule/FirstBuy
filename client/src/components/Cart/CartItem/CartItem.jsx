@@ -1,0 +1,44 @@
+import "./CartItem.scss";
+import { MdClose } from "react-icons/md";
+import prod from "../../../assets/products/earbuds-prod-1.webp";
+import React,{ useContext } from "react";
+import { Contexthoga } from "../../../utils/Context";
+const CartItem = () => {
+
+  const {cartItems,handleRemoveFromCart,handleCartProductQuantity} = useContext(Contexthoga)
+  return (
+    <div className="cart-products">
+      {cartItems?.map((item) => (
+        <div key={item.id} className="search-result-item">
+        <div className="img-container">
+          <img src={prod} alt="" />
+        </div>
+        <div className="prod-details">
+       
+          <span className="name">{item.attributes.title}</span>
+         
+          <div className="quantity-buttons">
+            <span onClick={() =>
+                                    handleCartProductQuantity("dec", item)
+                                }>-</span>
+            <span>{item.attributes.quantity}</span>
+            <span onClick={() =>
+                                    handleCartProductQuantity("inc", item)
+                                }>+</span>
+          </div>
+          <div className="text">
+            <span>{item.attributes.quantity}</span>
+            <span>*</span>
+            <span className="highlight">&#8377;{item.attributes.price}</span>
+          </div>
+        </div>
+        <MdClose className="close-btn" onClick={()=>{handleRemoveFromCart(item)}}/>
+      </div>
+
+      ))}    
+      
+    </div>
+  );
+};
+
+export default CartItem;
